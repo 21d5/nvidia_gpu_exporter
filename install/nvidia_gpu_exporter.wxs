@@ -9,11 +9,11 @@
   <?endif ?>
 
   <Product Id="*" UpgradeCode="66a6eb5b-1fc2-4b14-a362-5ceec6413308"
-           Name="windows_exporter" Version="$(var.Version)" Manufacturer="prometheus-community"
+           Name="nvidia_gpu_exporter" Version="$(var.Version)" Manufacturer="prometheus-community"
            Language="1033" Codepage="1252">
     <Package Id="*" Manufacturer="prometheus-community" InstallScope="perMachine" InstallerVersion="500"
-             Description="windows_exporter $(var.Version) installer" Compressed="yes" />
-    <Media Id="1" Cabinet="windows_exporter.cab" EmbedCab="yes"/>
+             Description="nvidia_gpu_exporter $(var.Version) installer" Compressed="yes" />
+    <Media Id="1" Cabinet="nvidia_gpu_exporter.cab" EmbedCab="yes"/>
     <MajorUpgrade Schedule="afterInstallInitialize" DowngradeErrorMessage="A later version of [ProductName] is already installed. Setup will now exit." />
 
     <Property Id="ENABLED_COLLECTORS" Secure="yes"/>
@@ -36,7 +36,7 @@
 
     <Directory Id="TARGETDIR" Name="SourceDir">
       <Directory Id="$(var.PlatformProgramFiles)">
-        <Directory Id="APPLICATIONROOTDIRECTORY" Name="windows_exporter">
+        <Directory Id="APPLICATIONROOTDIRECTORY" Name="nvidia_gpu_exporter">
           <Directory Id="textfile_inputs" Name="textfile_inputs" />
         </Directory>
       </Directory>
@@ -47,17 +47,17 @@
 
     <ComponentGroup Id="Files">
       <Component Directory="APPLICATIONROOTDIRECTORY">
-        <File Id="windows_exporter.exe" Name="windows_exporter.exe" Source="Work\windows_exporter.exe" KeyPath="yes">
-          <fw:FirewallException Id="MetricsEndpoint" Name="windows_exporter (HTTP [LISTEN_PORT])" Description="windows_exporter HTTP endpoint" Port="[LISTEN_PORT]" Protocol="tcp" IgnoreFailure="yes">
+        <File Id="nvidia_gpu_exporter.exe" Name="nvidia_gpu_exporter.exe" Source="Work\nvidia_gpu_exporter.exe" KeyPath="yes">
+          <fw:FirewallException Id="MetricsEndpoint" Name="nvidia_gpu_exporter (HTTP [LISTEN_PORT])" Description="nvidia_gpu_exporter HTTP endpoint" Port="[LISTEN_PORT]" Protocol="tcp" IgnoreFailure="yes">
             <fw:RemoteAddress>[REMOTE_ADDR]</fw:RemoteAddress>
           </fw:FirewallException> 
         </File>
-        <ServiceInstall Id="InstallExporterService" Name="windows_exporter" DisplayName="windows_exporter" Description="Exports Prometheus metrics about the system" ErrorControl="normal" Start="auto" Type="ownProcess" Arguments="--log.format logger:eventlog?name=windows_exporter [CollectorsFlag] [ListenFlagBoth] [ListenFlagAddr] [ListenFlagPort] [MetricsPathFlag] [TextfileDirFlag] [ExtraFlags]">
+        <ServiceInstall Id="InstallExporterService" Name="nvidia_gpu_exporter" DisplayName="nvidia_gpu_exporter" Description="Exports Prometheus metrics about the system" ErrorControl="normal" Start="auto" Type="ownProcess" Arguments="--log.format logger:eventlog?name=nvidia_gpu_exporter [CollectorsFlag] [ListenFlagBoth] [ListenFlagAddr] [ListenFlagPort] [MetricsPathFlag] [TextfileDirFlag] [ExtraFlags]">
           <util:ServiceConfig FirstFailureActionType="restart" SecondFailureActionType="restart" ThirdFailureActionType="restart" RestartServiceDelayInSeconds="60" />
           <ServiceDependency Id="wmiApSrv" />
         </ServiceInstall>
-        <ServiceControl Id="ServiceStateControl" Name="windows_exporter" Remove="uninstall" Start="install" Stop="both" />
-        <util:EventSource Log="Application" Name="windows_exporter" EventMessageFile="%SystemRoot%\System32\EventCreate.exe" />
+        <ServiceControl Id="ServiceStateControl" Name="nvidia_gpu_exporter" Remove="uninstall" Start="install" Stop="both" />
+        <util:EventSource Log="Application" Name="nvidia_gpu_exporter" EventMessageFile="%SystemRoot%\System32\EventCreate.exe" />
       </Component>
       <Component Id="CreateTextfileDirectory" Directory="textfile_inputs" Guid="d03ef58a-9cbf-4165-ad39-d143e9b27e14">
         <CreateFolder />
