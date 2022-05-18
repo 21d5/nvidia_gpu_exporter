@@ -8,7 +8,7 @@
     <?define PlatformProgramFiles = "ProgramFilesFolder" ?>
   <?endif ?>
 
-  <Product Id="*" UpgradeCode="66a6eb5b-1fc2-4b14-a362-5ceec6413308"
+  <Product Id="*" UpgradeCode="f2193980-d6a2-11ec-be20-6dab9220f0a4"
            Name="nvidia_gpu_exporter" Version="$(var.Version)" Manufacturer="prometheus-community"
            Language="1033" Codepage="1252">
     <Package Id="*" Manufacturer="prometheus-community" InstallScope="perMachine" InstallerVersion="500"
@@ -59,7 +59,7 @@
         <ServiceControl Id="ServiceStateControl" Name="nvidia_gpu_exporter" Remove="uninstall" Start="install" Stop="both" />
         <util:EventSource Log="Application" Name="nvidia_gpu_exporter" EventMessageFile="%SystemRoot%\System32\EventCreate.exe" />
       </Component>
-      <Component Id="CreateTextfileDirectory" Directory="textfile_inputs" Guid="d03ef58a-9cbf-4165-ad39-d143e9b27e14">
+      <Component Id="CreateTextfileDirectory" Directory="textfile_inputs" Guid="5e9002e6-5e80-4d20-a626-dc37936da52f">
         <CreateFolder />
       </Component>
     </ComponentGroup>
